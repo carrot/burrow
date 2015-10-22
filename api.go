@@ -3,8 +3,9 @@ package main
 import (
 	"github.com/carrot/go-base-api/controllers"
 	"github.com/carrot/go-base-api/db"
+	"github.com/carrot/go-base-api/middleware"
 	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	echo_middleware "github.com/labstack/echo/middleware"
 	"github.com/tylerb/graceful"
 	"log"
 	"time"
@@ -34,7 +35,7 @@ func main() {
 	// Middleware
 	// -----------
 
-	e.Use(middleware.Logger())
+	e.Use(echo_middleware.Logger())
 	e.Use(middleware.Recover())
 
 	// ----------

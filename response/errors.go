@@ -16,6 +16,7 @@ const (
 	ErrorRecordNotCreated          = 11
 	ErrorRecordNotUpdated          = 12
 	ErrorRecordNotDestroyed        = 13
+	ErrorInternalServerError       = 14
 )
 
 var errorText = map[int]string{
@@ -33,9 +34,10 @@ var errorText = map[int]string{
 	ErrorRecordNotCreated:          "Record Not Created",
 	ErrorRecordNotUpdated:          "Record Not Updated",
 	ErrorRecordNotDestroyed:        "Record Not Removed",
+	ErrorInternalServerError:       "Internal Server Error",
 }
 
-// Returns the associated error text
+// ErrorText returns a code's associated error text
 func ErrorText(code int) string {
 	return errorText[code]
 }

@@ -1,22 +1,5 @@
 package response
 
-// ------
-// Usage
-// ------
-
-// -- Success
-
-// resp := response.New(c)
-// defer resp.Render()
-// resp.SetResponse(http.StatusOK, content)
-
-// -- Error
-
-// resp := response.New(c)
-// defer resp.Render()
-// resp.AddError(r.ErrorMissingParameter)
-// resp.SetResponse(http.StatusInternalServerError, nil)
-
 import (
 	"github.com/labstack/echo"
 	"net/http"
