@@ -7,6 +7,16 @@
 _obj
 _test
 
+# vim
+*.swp
+*.swo
+
+# Gom
+_vendor/
+
+# Compiled file
+go-base-api
+
 # Architecture specific extensions/prefixes
 *.[568vq]
 [568vq].out
@@ -22,6 +32,3 @@ _testmain.go
 *.exe
 *.test
 *.prof
-
-Godeps
-vendor
