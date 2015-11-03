@@ -8,6 +8,13 @@ Clone this project into your [$GOPATH](https://golang.org/cmd/go/#hdr-GOPATH_env
 
 The project by default is set up to point at `github.com/carrot/go-base-api`, but you can change that to whatever you'd like.  Just be sure to update all references in the code to match your new location.
 
+#### Environment Variables
+
+```
+# Always set as 1, to manage dependencies
+export GO15VENDOREXPERIMENT=1
+```
+
 #### Dependencies + Building
 
 We manage our dependencies in this project with [gom](https://github.com/mattn/gom).  So to start off, you're going to have to install that:
