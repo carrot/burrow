@@ -14,18 +14,16 @@ func Open() {
 	databaseUrl := os.Getenv("POSTGRES_DATABASE_URL")
 
 	// Opening + storing the connection
-	db, err := sql.Open("postgres", databaseUrl)
+	database, err := sql.Open("postgres", databaseUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Pinging the database
-	err = db.Ping()
+	err = database.Ping()
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	database = db
 }
 
 func Close() {
