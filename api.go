@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/carrot/go-base-api/controllers"
-	"github.com/carrot/go-base-api/db"
+	db "github.com/carrot/go-base-api/db/redis"
 	"github.com/carrot/go-base-api/middleware"
 	"github.com/labstack/echo"
 	echo_middleware "github.com/labstack/echo/middleware"

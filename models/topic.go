@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/carrot/go-base-api/db"
+	"github.com/carrot/go-base-api/db/redis"
 )
 
 type Topic struct {
