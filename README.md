@@ -10,7 +10,7 @@ The project by default is set up to point at `github.com/carrot/go-base-api`, bu
 
 #### Environment Variables
 
-```
+```sh
 # Always set as 1, to manage dependencies
 export GO15VENDOREXPERIMENT=1
 ```
@@ -19,19 +19,19 @@ export GO15VENDOREXPERIMENT=1
 
 We manage our dependencies in this project with [gom](https://github.com/mattn/gom).  So to start off, you're going to have to install that:
 
-```
+```sh
 go get github.com/mattn/gom
 ```
 
 After you've installed gom, you can run the following command to install the dependencies:
 
-```
+```sh
 gom install
 ```
 
 After you have the dependencies installed, you can build the project:
 
-```
+```sh
 gom build
 ```
 
