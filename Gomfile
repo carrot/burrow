@@ -1,0 +1,5 @@
+gom 'github.com/bradfitz/http2'
+gom 'github.com/labstack/echo', :tag => 'v1.2.0'
+gom 'github.com/tylerb/graceful', :tag =>'v1.2.3'
+gom 'github.com/stretchr/testify', :tag =>'v1.0'
+gom 'github.com/garyburd/redigo/redis'

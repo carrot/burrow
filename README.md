@@ -1,5 +1,42 @@
 # Go Base API
 
+Carrots Base API scaffolding for Go.
+
+## Getting Started
+
+Clone this project into your [$GOPATH](https://golang.org/cmd/go/#hdr-GOPATH_environment_variable).
+
+The project by default is set up to point at `github.com/carrot/go-base-api`, but you can change that to whatever you'd like.  Just be sure to update all references in the code to match your new location.
+
+#### Environment Variables
+
+```sh
+# Always set as 1, to manage dependencies
+export GO15VENDOREXPERIMENT=1
+```
+
+#### Dependencies + Building
+
+We manage our dependencies in this project with [gom](https://github.com/mattn/gom).  So to start off, you're going to have to install that:
+
+```sh
+go get github.com/mattn/gom
+```
+
+After you've installed gom, you can run the following command to install the dependencies:
+
+```sh
+gom install
+```
+
+After you have the dependencies installed, you can build the project:
+
+```sh
+gom build
+```
+
+An executable file with the name of the root folder should now appear in the current directory.  You can run this and navigate to `http://localhost:5000/`.  If you receive a page that says `Not Found` you're all set up!
+
 ## Main
 
 ## Controllers
