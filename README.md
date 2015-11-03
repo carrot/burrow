@@ -10,6 +10,12 @@ The project by default is set up to point at `github.com/carrot/go-base-api`, bu
 
 #### Environment Variables
 
+We use [godotenv](https://github.com/joho/godotenv) (a Go port of [bkeepers/dotenv](https://github.com/bkeepers/dotenv))to manage environment variables.
+
+Copy `.env.sample` to `.env`, and update the values in the `.env` file.
+
+You'll also need to globally set this environment variable:
+
 ```sh
 # Always set as 1, to manage dependencies
 export GO15VENDOREXPERIMENT=1
