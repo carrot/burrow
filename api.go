@@ -2,16 +2,27 @@ package main
 
 import (
 	"github.com/carrot/go-base-api/controllers"
-	"github.com/carrot/go-base-api/db"
+	db "github.com/carrot/go-base-api/db/redis"
 	"github.com/carrot/go-base-api/middleware"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
 	echo_middleware "github.com/labstack/echo/middleware"
 	"github.com/tylerb/graceful"
 	"log"
+	"os"
 	"time"
 )
 
 func main() {
+	// ---------------------
+	// Environment Variables
+	// ---------------------
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	// ---------
 	// Database
 	// ---------
@@ -52,6 +63,7 @@ func main() {
 	// Run
 	// ----
 
-	log.Println("Server started on :5000")
-	graceful.ListenAndServe(e.Server(":5000"), 5*time.Second) // Graceful shutdown
+	port := os.Getenv("PORT")
+	log.Println("Server started on :" + port)
+	graceful.ListenAndServe(e.Server(":"+port), 5*time.Second) // Graceful shutdown
 }
