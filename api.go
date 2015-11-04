@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/carrot/go-base-api/controllers"
-	db "github.com/carrot/go-base-api/db/redis"
+	db "github.com/carrot/go-base-api/db/postgres"
 	"github.com/carrot/go-base-api/middleware"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo"

@@ -1,30 +1,47 @@
 package models
 
 import (
-	db "github.com/carrot/go-base-api/db/redis"
+	"database/sql"
+	db "github.com/carrot/go-base-api/db/postgres"
+	"time"
 )
 
 type Topic struct {
-	Id    int64  `json:"id"`
-	Copy  string `json:"copy"`
-	Asset string `json:"asset"`
+	Id        int64     `json:"id"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
-// When only dealing with a single record, call on the struct
+func AllTopics(limit int64, offset int64) ([]Topic, error) {
+	// Query DB
+	database := db.Get()
+	rows, err := database.Query("SELECT * FROM topics LIMIT $1 OFFSET $2", limit, offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
 
-// AllTopics ([]Topic, error)
-// (topic).Find(id) (Topic, error)
-// (topic).Create() error
-// (topic).Update() error
-// (topic).Destroy(id) error
+	// Converting rows into []Topic
+	var topics []Topic
+	for rows.Next() {
+		t := new(Topic)
+		err = t.consumeNextRow(rows)
 
-func AllTopics() ([]Topic, error) {
-	var res []Topic
+		if err != nil {
+			return nil, err
+		}
 
-	conn := db.Get()
-	defer conn.Close()
+		topics = append(topics, *t)
+	}
 
-	return res, nil
+	// Checking for any errors during iteration
+	err = rows.Err()
+	if err != nil {
+		return nil, err
+	}
+
+	return topics, nil
 }
 
 func (m *Topic) Find(id int64) (Topic, error) {
@@ -61,4 +78,22 @@ func (m *Topic) Destroy() error {
 	// Delete Record
 
 	return nil
+}
+
+func (t *Topic) consumeRow(row *sql.Row) error {
+	return row.Scan(
+		&t.Id,
+		&t.Name,
+		&t.CreatedAt,
+		&t.UpdatedAt,
+	)
+}
+
+func (t *Topic) consumeNextRow(rows *sql.Rows) error {
+	return rows.Scan(
+		&t.Id,
+		&t.Name,
+		&t.CreatedAt,
+		&t.UpdatedAt,
+	)
 }
