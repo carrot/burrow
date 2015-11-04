@@ -44,16 +44,13 @@ func AllTopics(limit int64, offset int64) ([]Topic, error) {
 	return topics, nil
 }
 
-func (m *Topic) Find(id int64) (Topic, error) {
-	conn := db.Get()
-	defer conn.Close()
-
-	// Find Individual Record
-
-	return Topic{}, nil
+func (t *Topic) Load(id int64) error {
+	database := db.Get()
+	row := database.QueryRow("SELECT * FROM topics WHERE id = $1", id)
+	return t.consumeRow(row)
 }
 
-func (m *Topic) Create() error {
+func (m *Topic) Save() error {
 	conn := db.Get()
 	defer conn.Close()
 

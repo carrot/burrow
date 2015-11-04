@@ -38,9 +38,9 @@ func (tc *TopicsController) Index(c *echo.Context) error {
 		offset = offsetInt
 	}
 
+	// Fetching models
 	res, err := models.AllTopics(limit, offset)
 	if err != nil {
-		// Do some checks
 		resp.AddError(response.ErrorNoContent)
 		resp.SetResponse(http.StatusInternalServerError, nil)
 		return nil
@@ -50,9 +50,35 @@ func (tc *TopicsController) Index(c *echo.Context) error {
 	return nil
 }
 
+/**
+ * @api {get} /topics/{id} Get a topic
+ * @apiName GetTopic
+ * @apiGroup Topics
+ *
+ * @apiParam {Number} id The id of the topic
+ */
 func (tc *TopicsController) Show(c *echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
+
+	// Getting id
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		resp.AddError(response.ErrorInvalidParameters)
+		resp.SetResponse(http.StatusBadRequest, nil)
+		return nil
+	}
+
+	// Fetching model
+	topic := new(models.Topic)
+	err = topic.Load(id)
+	if err != nil {
+		resp.AddError(response.ErrorRecordNotFound)
+		resp.SetResponse(http.StatusNotFound, nil)
+		return nil
+	}
+
+	resp.SetResponse(http.StatusOK, topic)
 	return nil
 }
 
