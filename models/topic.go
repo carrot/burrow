@@ -50,11 +50,18 @@ func (t *Topic) Load(id int64) error {
 	return t.consumeRow(row)
 }
 
-func (m *Topic) Save() error {
-	conn := db.Get()
-	defer conn.Close()
+func (t *Topic) Save() error {
+	// Putting into database
+	database := db.Get()
+	row := database.QueryRow("INSERT INTO topics VALUES(default, $1, default, default) RETURNING *",
+		&t.Name,
+	)
 
-	// Create Record
+	// Updating values to match database
+	err := t.consumeRow(row)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

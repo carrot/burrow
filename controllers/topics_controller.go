@@ -82,9 +82,35 @@ func (tc *TopicsController) Show(c *echo.Context) error {
 	return nil
 }
 
+/**
+ * @api {post} /topics Creates a new topic
+ * @apiName CreateTopic
+ * @apiGroup Topics
+ *
+ * @apiParam {String} name The name of the topic
+ */
 func (tc *TopicsController) Create(c *echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
+
+	// Getting params
+	name := c.Form("name")
+	if name == "" {
+		resp.AddError(response.ErrorInvalidParameters)
+		resp.SetResponse(http.StatusBadRequest, nil)
+		return nil
+	}
+
+	// Creating the topic
+	topic := new(models.Topic)
+	topic.Name = name
+	err := topic.Save()
+	if err != nil {
+		resp.SetResponse(http.StatusInternalServerError, nil)
+		return nil
+	}
+
+	resp.SetResponse(http.StatusOK, topic)
 	return nil
 }
 
