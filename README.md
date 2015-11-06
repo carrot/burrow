@@ -57,6 +57,14 @@ An executable file with the name of the root folder should now appear in the cur
 
 ## Controllers
 
+Controllers are responsible for directly managing what happens during a request.  Every endpoint maps to a controller method.
+
+To keep things clean, we have one controller per model (with the name {Model}Controller) and all handlers are methods.
+
+We follow [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) as the naming convention for all of our controller methods.
+
+If you have a bulk operation (e.g. a bulk fetch) postfix `Many` to the appropriate CRUD operation name (ex: ReadMany, DeleteMany).
+
 ## Database
 
 ## Middleware
@@ -66,6 +74,23 @@ This contains a set of commonly used middleware created for use with the Echo fr
 - `Recover` - Recovers from `panic` calls. It's based off of the Echo-provided middleware of the same name but updated to fit our specific JSON interface model.
 
 ## Models
+
+Models are responsible for storing, updating data, and exposing data to the application.  They are the interface between the database and the rest of the application.
+
+We use one file per model, and store them in the `models/` directory and the name of the file is the `snake_case` version of the primary struct inside.
+
+We use [methods](https://gobyexample.com/methods) for fetching/manipulating single model structs, and [functions](https://gobyexample.com/functions) for bulk fetching models.
+
+We try to follow the naming conventions as described in this interface for all methods.  We don't actually enforce the interface in code, as most applications don't require every one of these methods for all models.
+
+```go
+type Model interface {
+    Load(id int64) error    // Loads the contents of model entry with ID into current struct
+    Save() error            // Saves the state of the current struct into the DB
+    Update() error          // Updates the state of the current struct to the DB
+    Delete() error          // Removes the current struct from the DB
+}
+```
 
 ## Responses
 

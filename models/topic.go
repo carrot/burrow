@@ -17,7 +17,7 @@ type Topic struct {
 func AllTopics(limit int64, offset int64) ([]Topic, error) {
 	// Query DB
 	database := db.Get()
-	rows, err := database.Query("SELECT * FROM topics LIMIT $1 OFFSET $2", limit, offset)
+	rows, err := database.Query("SELECT * FROM topics ORDER BY created_at LIMIT $1 OFFSET $2", limit, offset)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (t *Topic) Update() error {
 	return nil
 }
 
-func (t *Topic) Destroy() error {
+func (t *Topic) Delete() error {
 	// Deleting from database
 	database := db.Get()
 	res, err := database.Exec("DELETE FROM topics WHERE id=$1", t.Id)

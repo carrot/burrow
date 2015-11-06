@@ -18,7 +18,7 @@ type TopicsController struct{}
  * @apiParam {Number} [limit=10] The maximum number of items to return
  * @apiParam {Number} [offset=0] The offset relative to the number of items (not page number)
  */
-func (tc *TopicsController) Index(c *echo.Context) error {
+func (tc *TopicsController) ReadMany(c *echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
 
@@ -57,7 +57,7 @@ func (tc *TopicsController) Index(c *echo.Context) error {
  *
  * @apiParam {Number} id The id of the topic
  */
-func (tc *TopicsController) Show(c *echo.Context) error {
+func (tc *TopicsController) Read(c *echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
 
@@ -165,7 +165,7 @@ func (tc *TopicsController) Update(c *echo.Context) error {
  *
  * @apiParam {Number} id The id of the topic to delete
  */
-func (tc *TopicsController) Destroy(c *echo.Context) error {
+func (tc *TopicsController) Delete(c *echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
 
@@ -177,10 +177,10 @@ func (tc *TopicsController) Destroy(c *echo.Context) error {
 		return nil
 	}
 
-	// Destroying topic
+	// Deleting topic
 	topic := new(models.Topic)
 	topic.Id = id
-	err = topic.Destroy()
+	err = topic.Delete()
 	if err != nil {
 		resp.SetResponse(http.StatusNotFound, nil)
 		return nil
