@@ -67,6 +67,16 @@ If you have a bulk operation (e.g. a bulk fetch) postfix `Many` to the appropria
 
 ## Database
 
+We have configurations for both Redis and PostgreSQL.
+
+### PostgreSQL
+
+PostgreSQL is very likely going to be your primary datastore if you are building out a larger API.
+
+We have details of how to get PostgreSQL up and running in the [Getting Started](#getting-started) section of this README.
+
+We use [lib/pq](https://github.com/lib/pq) as our database driver, but you really don't have to know that as it's already been abstracted away in our `db/postgres` package.  You will simply be interfacing with Golangs [database/sql](https://golang.org/pkg/database/sql/).
+
 ## Middleware
 
 This contains a set of commonly used middleware created for use with the Echo framework.
