@@ -66,11 +66,20 @@ func (t *Topic) Save() error {
 	return nil
 }
 
-func (m *Topic) Update() error {
-	conn := db.Get()
-	defer conn.Close()
+func (t *Topic) Update() error {
+	// Updating database
+	database := db.Get()
 
-	// Update Record
+	row := database.QueryRow("UPDATE topics SET name=$1 WHERE id=$2 RETURNING *",
+		&t.Name,
+		&t.Id,
+	)
+
+	// Updating values to match database
+	err := t.consumeRow(row)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

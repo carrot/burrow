@@ -114,9 +114,47 @@ func (tc *TopicsController) Create(c *echo.Context) error {
 	return nil
 }
 
+/**
+ * @api {put} /topics/{id} Updates a topic
+ * @apiName UpdateTopic
+ * @apiGroup Topics
+ *
+ * @apiParam {Number} id The id of the topic to update
+ * @apiParam {String} [name] The new name of the topic
+ */
 func (tc *TopicsController) Update(c *echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
+
+	// Getting params
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		resp.AddError(response.ErrorInvalidParameters)
+		resp.SetResponse(http.StatusBadRequest, nil)
+		return nil
+	}
+
+	// Loading the topic
+	topic := new(models.Topic)
+	err = topic.Load(id)
+	if err != nil {
+		resp.AddError(response.ErrorRecordNotFound)
+		resp.SetResponse(http.StatusNotFound, nil)
+		return nil
+	}
+
+	name := c.Form("name")
+	if name != "" {
+		topic.Name = name
+	}
+
+	err = topic.Update()
+	if err != nil {
+		resp.SetResponse(http.StatusInternalServerError, nil)
+		return nil
+	}
+
+	resp.SetResponse(http.StatusOK, topic)
 	return nil
 }
 
