@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"errors"
 	db "github.com/carrot/go-base-api/db/postgres"
 	"time"
 )
@@ -67,9 +68,8 @@ func (t *Topic) Save() error {
 }
 
 func (t *Topic) Update() error {
-	// Updating database
+	// Updating in database
 	database := db.Get()
-
 	row := database.QueryRow("UPDATE topics SET name=$1 WHERE id=$2 RETURNING *",
 		&t.Name,
 		&t.Id,
@@ -84,11 +84,18 @@ func (t *Topic) Update() error {
 	return nil
 }
 
-func (m *Topic) Destroy() error {
-	conn := db.Get()
-	defer conn.Close()
+func (t *Topic) Destroy() error {
+	// Deleting from database
+	database := db.Get()
+	res, err := database.Exec("DELETE FROM topics WHERE id=$1", t.Id)
+	if err != nil {
+		return err
+	}
 
-	// Delete Record
+	numRows, _ := res.RowsAffected()
+	if numRows != 1 {
+		return errors.New("Nothing was deleted")
+	}
 
 	return nil
 }

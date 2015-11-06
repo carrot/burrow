@@ -158,8 +158,34 @@ func (tc *TopicsController) Update(c *echo.Context) error {
 	return nil
 }
 
+/**
+ * @api {delete} /topics/{id} Deletes a topic
+ * @apiName DeleteTopic
+ * @apiGroup Topics
+ *
+ * @apiParam {Number} id The id of the topic to delete
+ */
 func (tc *TopicsController) Destroy(c *echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
+
+	// Getting Params
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		resp.AddError(response.ErrorInvalidParameters)
+		resp.SetResponse(http.StatusBadRequest, nil)
+		return nil
+	}
+
+	// Destroying topic
+	topic := new(models.Topic)
+	topic.Id = id
+	err = topic.Destroy()
+	if err != nil {
+		resp.SetResponse(http.StatusNotFound, nil)
+		return nil
+	}
+
+	resp.SetResponse(http.StatusOK, nil)
 	return nil
 }
