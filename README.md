@@ -21,6 +21,16 @@ You'll also need to globally set this environment variable:
 export GO15VENDOREXPERIMENT=1
 ```
 
+#### Database
+
+We manage our database migrations with [originator](https://github.com/DigitalCitadel/originator).  To start off, [get that installed](https://github.com/DigitalCitadel/originator#installation) on your machine.
+
+After you have originator installed, cd into `originator-files/config` and run `mkdir $(hostname)` to create a directory to hold your machine-specific config.
+
+The only config file that will have to be added to your machine-specific config is the `database_config.bash` file.  So go ahead and copy that from the default folder into your machine specific config folder.  Go and update your database config file to match your specific database setup.
+
+After you've updated the file, you can go and navigate to the root of the project and run `originator migrate` to run all of the current migrations.  Your database should now be set up.
+
 #### Dependencies + Building
 
 We manage our dependencies in this project with [gom](https://github.com/mattn/gom).  So to start off, you're going to have to install that:
