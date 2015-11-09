@@ -13,10 +13,43 @@ import (
 	"time"
 )
 
+func buildEcho() (e *echo.Echo) {
+	// ----------
+	// Framework
+	// ----------
+
+	e = echo.New()
+
+	// -----------
+	// Middleware
+	// -----------
+
+	e.Use(echo_middleware.Logger())
+	e.Use(middleware.Recover())
+
+	// ------------
+	// Controllers
+	// ------------
+
+	topicsController := new(controllers.TopicsController)
+
+	// ----------
+	// Endpoints
+	// ----------
+
+	e.Get("/topics", topicsController.Index)
+	e.Get("/topics/:id", topicsController.Show)
+	e.Post("/topics", topicsController.Create)
+	e.Put("/topics/:id", topicsController.Update)
+	e.Delete("/topics/:id", topicsController.Delete)
+
+	return
+}
+
 func main() {
-	// ---------------------
+	// ----------------------
 	// Environment Variables
-	// ---------------------
+	// ----------------------
 
 	err := godotenv.Load()
 	if err != nil {
@@ -30,34 +63,11 @@ func main() {
 	db.Open()
 	defer db.Close()
 
-	// ------------
-	// Controllers
-	// ------------
+	// -----
+	// Echo
+	// -----
 
-	topicsController := new(controllers.TopicsController)
-
-	// ----------
-	// Framework
-	// ----------
-
-	e := echo.New()
-
-	// -----------
-	// Middleware
-	// -----------
-
-	e.Use(echo_middleware.Logger())
-	e.Use(middleware.Recover())
-
-	// ----------
-	// Endpoints
-	// ----------
-
-	e.Get("/topics", topicsController.Index)
-	e.Get("/topics/:id", topicsController.Show)
-	e.Post("/topics", topicsController.Create)
-	e.Put("/topics/:id", topicsController.Update)
-	e.Delete("/topics/:id", topicsController.Delete)
+	e := buildEcho()
 
 	// ----
 	// Run
