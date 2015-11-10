@@ -11,6 +11,7 @@ import (
 	"github.com/tylerb/graceful"
 	"log"
 	"math/rand"
+	"net/http"
 	"os"
 	"strconv"
 	"testing"
@@ -81,6 +82,51 @@ func (suite *ApiTestSuite) TestPost() {
 	}
 	getTopic := getResp.Content.(*models.Topic)
 	assert.Equal(suite.T(), getTopic.Name, postTopic.Name)
+
+	// Testing [PUT] /topics/{id}
+	putResp := new(response.Response)
+	putResp.Content = new(models.Topic)
+
+	newName := randomString(10)
+	suite.wreckerClient.Put("/topics/"+strconv.FormatInt(postTopic.Id, 10)).
+		FormParam("name", newName).
+		Into(&putResp).
+		Execute()
+
+	assert.NotNil(suite.T(), putResp.Content)
+	if putResp.Content == nil {
+		return
+	}
+	putTopic := putResp.Content.(*models.Topic)
+	assert.Equal(suite.T(), putTopic.Name, newName)
+
+	// Testing [GET] /topics/{id} (verifying that it was updated)
+	getResp = new(response.Response)
+	getResp.Content = new(models.Topic)
+
+	suite.wreckerClient.Get("/topics/" + strconv.FormatInt(postTopic.Id, 10)).
+		Into(&getResp).
+		Execute()
+
+	assert.NotNil(suite.T(), getResp.Content)
+	if getResp.Content == nil {
+		return
+	}
+	getTopic = getResp.Content.(*models.Topic)
+	assert.Equal(suite.T(), getTopic.Name, newName)
+
+	// Testing [DELETE] /topics/{id}
+	deleteResp := new(response.Response)
+	deleteResp.Content = new(models.Topic)
+
+	httpResp, _ := suite.wreckerClient.Delete("/topics/" + strconv.FormatInt(postTopic.Id, 10)).
+		Execute()
+	assert.Equal(suite.T(), httpResp.StatusCode, http.StatusOK)
+
+	// Testing [GET] /topics/{id} (verifying that it was actually deleted)
+	httpResp, _ = suite.wreckerClient.Get("/topics/" + strconv.FormatInt(postTopic.Id, 10)).
+		Execute()
+	assert.Equal(suite.T(), httpResp.StatusCode, http.StatusNotFound)
 }
 
 // ============================
