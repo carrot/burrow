@@ -35,3 +35,7 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+# IntelliJ
+go-base-api.iml
+.idea/*
