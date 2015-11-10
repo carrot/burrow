@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/carrot/go-base-api/controllers"
-	db "github.com/carrot/go-base-api/db/redis"
+	db "github.com/carrot/go-base-api/db/postgres"
 	"github.com/carrot/go-base-api/middleware"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
@@ -57,7 +57,7 @@ func main() {
 	e.Get("/topics/:id", topicsController.Show)
 	e.Post("/topics", topicsController.Create)
 	e.Put("/topics/:id", topicsController.Update)
-	e.Delete("/topics/:id", topicsController.Destroy)
+	e.Delete("/topics/:id", topicsController.Delete)
 
 	// ----
 	// Run

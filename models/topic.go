@@ -1,64 +1,119 @@
 package models
 
 import (
-	db "github.com/carrot/go-base-api/db/redis"
+	"database/sql"
+	"errors"
+	db "github.com/carrot/go-base-api/db/postgres"
+	"time"
 )
 
 type Topic struct {
-	Id    int64  `json:"id"`
-	Copy  string `json:"copy"`
-	Asset string `json:"asset"`
+	Id        int64     `json:"id"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
-// When only dealing with a single record, call on the struct
+func AllTopics(limit int64, offset int64) ([]Topic, error) {
+	// Query DB
+	database := db.Get()
+	rows, err := database.Query("SELECT * FROM topics ORDER BY created_at LIMIT $1 OFFSET $2", limit, offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
 
-// AllTopics ([]Topic, error)
-// (topic).Find(id) (Topic, error)
-// (topic).Create() error
-// (topic).Update() error
-// (topic).Destroy(id) error
+	// Converting rows into []Topic
+	var topics []Topic
+	for rows.Next() {
+		t := new(Topic)
+		err = t.consumeNextRow(rows)
 
-func AllTopics() ([]Topic, error) {
-	var res []Topic
+		if err != nil {
+			return nil, err
+		}
 
-	conn := db.Get()
-	defer conn.Close()
+		topics = append(topics, *t)
+	}
 
-	return res, nil
+	// Checking for any errors during iteration
+	err = rows.Err()
+	if err != nil {
+		return nil, err
+	}
+
+	return topics, nil
 }
 
-func (m *Topic) Find(id int64) (Topic, error) {
-	conn := db.Get()
-	defer conn.Close()
-
-	// Find Individual Record
-
-	return Topic{}, nil
+func (t *Topic) Load(id int64) error {
+	database := db.Get()
+	row := database.QueryRow("SELECT * FROM topics WHERE id = $1", id)
+	return t.consumeRow(row)
 }
 
-func (m *Topic) Create() error {
-	conn := db.Get()
-	defer conn.Close()
+func (t *Topic) Save() error {
+	// Putting into database
+	database := db.Get()
+	row := database.QueryRow("INSERT INTO topics VALUES(default, $1, default, default) RETURNING *",
+		&t.Name,
+	)
 
-	// Create Record
+	// Updating values to match database
+	err := t.consumeRow(row)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
 
-func (m *Topic) Update() error {
-	conn := db.Get()
-	defer conn.Close()
+func (t *Topic) Update() error {
+	// Updating in database
+	database := db.Get()
+	row := database.QueryRow("UPDATE topics SET name=$1 WHERE id=$2 RETURNING *",
+		&t.Name,
+		&t.Id,
+	)
 
-	// Update Record
+	// Updating values to match database
+	err := t.consumeRow(row)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
 
-func (m *Topic) Destroy() error {
-	conn := db.Get()
-	defer conn.Close()
+func (t *Topic) Delete() error {
+	// Deleting from database
+	database := db.Get()
+	res, err := database.Exec("DELETE FROM topics WHERE id=$1", t.Id)
+	if err != nil {
+		return err
+	}
 
-	// Delete Record
+	numRows, _ := res.RowsAffected()
+	if numRows != 1 {
+		return errors.New("Nothing was deleted")
+	}
 
 	return nil
+}
+
+func (t *Topic) consumeRow(row *sql.Row) error {
+	return row.Scan(
+		&t.Id,
+		&t.Name,
+		&t.CreatedAt,
+		&t.UpdatedAt,
+	)
+}
+
+func (t *Topic) consumeNextRow(rows *sql.Rows) error {
+	return rows.Scan(
+		&t.Id,
+		&t.Name,
+		&t.CreatedAt,
+		&t.UpdatedAt,
+	)
 }
