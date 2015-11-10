@@ -18,7 +18,7 @@ type TopicsController struct{}
  * @apiParam {Number} [limit=10] The maximum number of items to return
  * @apiParam {Number} [offset=0] The offset relative to the number of items (not page number)
  */
-func (tc *TopicsController) ReadMany(c *echo.Context) error {
+func (tc *TopicsController) Index(c *echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
 
@@ -57,7 +57,7 @@ func (tc *TopicsController) ReadMany(c *echo.Context) error {
  *
  * @apiParam {Number} id The id of the topic
  */
-func (tc *TopicsController) Read(c *echo.Context) error {
+func (tc *TopicsController) Show(c *echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
 

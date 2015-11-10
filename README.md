@@ -61,9 +61,7 @@ Controllers are responsible for directly managing what happens during a request.
 
 To keep things clean, we have one controller per model (with the name {Model}Controller) and all handlers are methods.
 
-We follow [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) as the naming convention for all of our controller methods.
-
-If you have a bulk operation (e.g. a bulk fetch) postfix `Many` to the appropriate CRUD operation name (ex: ReadMany, DeleteMany).
+We follow [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) as the naming convention for all of our controller methods, with the exception of Read, which we use `Index` for bulk fetches, and `Show` for single fetches.
 
 ## Database
 

@@ -53,8 +53,8 @@ func main() {
 	// Endpoints
 	// ----------
 
-	e.Get("/topics", topicsController.ReadMany)
-	e.Get("/topics/:id", topicsController.Read)
+	e.Get("/topics", topicsController.Index)
+	e.Get("/topics/:id", topicsController.Show)
 	e.Post("/topics", topicsController.Create)
 	e.Put("/topics/:id", topicsController.Update)
 	e.Delete("/topics/:id", topicsController.Delete)
