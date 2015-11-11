@@ -12,7 +12,7 @@ _test
 *.swo
 
 # Gom
-_vendor/
+vendor/
 
 # Environment variables
 .env

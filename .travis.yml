@@ -9,7 +9,7 @@ before_install:
 
 script:
   - $HOME/gopath/bin/gom install
-  - $HOME/gopath/bin/gom test
+  - cd ./request; $HOME/gopath/bin/gom test
 
 matrix:
   allow_failures:

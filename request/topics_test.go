@@ -1,10 +1,9 @@
-package main
+package request
 
 import (
 	"github.com/BrandonRomano/wrecker"
 	db "github.com/carrot/go-base-api/db/postgres"
 	"github.com/carrot/go-base-api/models"
-	"github.com/carrot/go-base-api/request"
 	"github.com/carrot/go-base-api/response"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
@@ -34,13 +33,13 @@ func (suite *ApiTestSuite) SetupTest() {
 	// project might be running through a CI system
 	// and the environment variables.  Will fail later
 	// rather than early
-	godotenv.Load()
+	godotenv.Load("../.env")
 
 	// Starting database
 	db.Open()
 
 	// Getting our Echo instance
-	e := request.BuildEcho()
+	e := BuildEcho()
 
 	// Running the server
 	port := os.Getenv("PORT")
