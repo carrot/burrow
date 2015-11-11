@@ -1,6 +1,7 @@
 language: go
 
 go:
+  - 1.5.1
   - tip
 
 before_install:
@@ -9,3 +10,7 @@ before_install:
 script:
   - $HOME/gopath/bin/gom install
   - $HOME/gopath/bin/gom test
+
+matrix:
+  allow_failures:
+    - go: tip
