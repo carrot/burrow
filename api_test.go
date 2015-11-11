@@ -4,6 +4,7 @@ import (
 	"github.com/BrandonRomano/wrecker"
 	db "github.com/carrot/go-base-api/db/postgres"
 	"github.com/carrot/go-base-api/models"
+	"github.com/carrot/go-base-api/request"
 	"github.com/carrot/go-base-api/response"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
@@ -39,7 +40,7 @@ func (suite *ApiTestSuite) SetupTest() {
 	db.Open()
 
 	// Getting our Echo instance
-	e := buildEcho()
+	e := request.BuildEcho()
 
 	// Running the server
 	port := os.Getenv("PORT")
