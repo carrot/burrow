@@ -1,0 +1,16 @@
+language: go
+
+go:
+  - 1.5.1
+  - tip
+
+before_install:
+  - go get github.com/mattn/gom
+
+script:
+  - $HOME/gopath/bin/gom install
+  - cd ./request; $HOME/gopath/bin/gom test
+
+matrix:
+  allow_failures:
+    - go: tip

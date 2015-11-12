@@ -106,7 +106,7 @@ func (tc *TopicsController) Create(c *echo.Context) error {
 	topic.Name = name
 	err := topic.Save()
 	if err != nil {
-		resp.SetResponse(http.StatusInternalServerError, nil)
+		resp.SetResponse(http.StatusConflict, nil)
 		return nil
 	}
 

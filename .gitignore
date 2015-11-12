@@ -12,7 +12,7 @@ _test
 *.swo
 
 # Gom
-_vendor/
+vendor/
 
 # Environment variables
 .env
@@ -35,3 +35,7 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+# IntelliJ
+go-base-api.iml
+.idea/*
