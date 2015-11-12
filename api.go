@@ -30,9 +30,9 @@ func main() {
 	// Environment Variables
 	// ----------------------
 
-	err := godotenv.Load()
+	err := godotenv.Load(".env." + environment.Get())
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatalf("Error loading .env.%v file", environment.Get())
 	}
 
 	// ---------
