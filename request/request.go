@@ -1,18 +1,18 @@
 package request
 
 import (
-	"github.com/labstack/echo"
-	"github.com/carrot/go-base-api/middleware"
 	"github.com/carrot/go-base-api/controllers"
+	"github.com/carrot/go-base-api/middleware"
+	"github.com/labstack/echo"
 	echo_middleware "github.com/labstack/echo/middleware"
 )
 
-func BuildEcho() (e *echo.Echo) {
+func BuildEcho() *echo.Echo {
 	// ----------
 	// Framework
 	// ----------
 
-	e = echo.New()
+	e := echo.New()
 
 	// -----------
 	// Middleware
@@ -37,5 +37,5 @@ func BuildEcho() (e *echo.Echo) {
 	e.Put("/topics/:id", topicsController.Update)
 	e.Delete("/topics/:id", topicsController.Delete)
 
-	return
+	return e
 }
