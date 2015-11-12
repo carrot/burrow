@@ -8,11 +8,26 @@ Clone this project into your [$GOPATH](https://golang.org/cmd/go/#hdr-GOPATH_env
 
 The project by default is set up to point at `github.com/carrot/go-base-api`, but you can change that to whatever you'd like.  Just be sure to update all references in the code to match your new location.
 
+#### Multiple Environment Support
+
+This base supports multiple environments:
+
+- development
+- testing
+- staging
+- production
+
+You will run this project with `./go-base-api {target-environment}`.  For example:
+
+```
+./go-base-api development
+```
+
 #### Environment Variables
 
 We use [godotenv](https://github.com/joho/godotenv) (a Go port of [bkeepers/dotenv](https://github.com/bkeepers/dotenv))to manage environment variables.
 
-Copy `.env.sample` to `.env`, and update the values in the `.env` file.
+Copy `.env.sample` to `.env.{target-environment}`, and update the values in the `.env.{target-environment}` file.
 
 You'll also need to globally set this environment variable:
 
@@ -52,6 +67,14 @@ gom build
 ```
 
 An executable file with the name of the root folder should now appear in the current directory.  You can run this and navigate to `http://localhost:5000/`.  If you receive a page that says `Not Found` you're all set up!
+
+#### Testing
+
+To run tests, run `gom test`.
+
+Tests should be written to automatically load `.env.testing` (but not fail if it's not there) and as a user of the tests you should have your `.env.testing` file filled out.
+
+If you're testing this on Travis CI, set up the environment variables as you traditionally would with Travis and run normally.
 
 ## Main
 
