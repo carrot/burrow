@@ -16,6 +16,7 @@ import (
 	"strconv"
 	"testing"
 	"time"
+	"github.com/carrot/go-base-api/environment"
 )
 
 func TestApiTestSuite(t *testing.T) {
@@ -33,7 +34,7 @@ func (suite *ApiTestSuite) SetupTest() {
 	// project might be running through a CI system
 	// and the environment variables.  Will fail later
 	// rather than early
-	godotenv.Load("../.env")
+	godotenv.Load("../.env." + environment.TESTING)
 
 	// Starting database
 	db.Open()
