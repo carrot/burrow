@@ -45,12 +45,6 @@ func (tc *TopicsController) Index(c *echo.Context) error {
 		return nil
 	}
 
-	// Checking if we have any topics
-	if len(res) < 1 {
-		resp.SetResponse(http.StatusNoContent, nil)
-		return nil
-	}
-
 	resp.SetResponse(http.StatusOK, res)
 	return nil
 }
