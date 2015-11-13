@@ -23,7 +23,6 @@ func Recover() echo.MiddlewareFunc {
 						err, n, trace[:n]))
 
 					resp := response.New(c)
-					resp.AddError(response.ErrorInternalServerError)
 					resp.SetResponse(http.StatusInternalServerError, nil)
 					resp.Render()
 				}
