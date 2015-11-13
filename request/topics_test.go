@@ -5,14 +5,12 @@ import (
 	db "github.com/carrot/go-base-api/db/postgres"
 	"github.com/carrot/go-base-api/models"
 	"github.com/carrot/go-base-api/response"
-	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"github.com/tylerb/graceful"
 	"log"
 	"math/rand"
 	"net/http"
-	"os"
 	"strconv"
 	"testing"
 	"time"
@@ -34,7 +32,7 @@ func (suite *ApiTestSuite) SetupTest() {
 	// project might be running through a CI system
 	// and the environment variables.  Will fail later
 	// rather than early
-	godotenv.Load("../.env." + environment.TESTING)
+	environment.SetWithRelativeDirectory("../", environment.TESTING)
 
 	// Starting database
 	db.Open()
@@ -43,7 +41,7 @@ func (suite *ApiTestSuite) SetupTest() {
 	e := BuildEcho()
 
 	// Running the server
-	port := os.Getenv("PORT")
+	port := environment.GetEnvVar(environment.VAR_PORT)
 	suite.wreckerClient = wrecker.New("http://localhost:" + port)
 	log.Println("Server started on :" + port)
 	go graceful.ListenAndServe(e.Server(":"+port), 5*time.Second) // Graceful shutdown

@@ -21,9 +21,13 @@ var (
 )
 
 func Set(env string) error {
+	return SetWithRelativeDirectory("./", env)
+}
+
+func SetWithRelativeDirectory(relativeDirectory string, env string) error {
 	if isValid(env) {
 		activeEnvironment = env
-		err := godotenv.Load(".env." + activeEnvironment)
+		err := godotenv.Load(relativeDirectory + ".env." + activeEnvironment)
 		if err != nil {
 			return errors.New("Error loading the .env." + activeEnvironment + " file")
 		}
