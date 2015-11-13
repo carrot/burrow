@@ -4,14 +4,14 @@ import (
 	"database/sql"
 	_ "github.com/lib/pq"
 	"log"
-	"os"
+	"github.com/carrot/go-base-api/environment"
 )
 
 var database *sql.DB
 
 func Open() {
 	// Pulling environment vars
-	databaseUrl := os.Getenv("POSTGRES_DATABASE_URL")
+	databaseUrl := environment.GetEnvVar(environment.PSQL_DATABASE_URL)
 
 	// Opening + storing the connection
 	db, err := sql.Open("postgres", databaseUrl)
