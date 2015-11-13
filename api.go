@@ -4,7 +4,6 @@ import (
 	db "github.com/carrot/go-base-api/db/postgres"
 	"github.com/carrot/go-base-api/environment"
 	"github.com/carrot/go-base-api/request"
-	"github.com/joho/godotenv"
 	"github.com/tylerb/graceful"
 	"log"
 	"os"
@@ -26,15 +25,6 @@ func main() {
 		log.Fatal("Running requires an environment argument")
 	}
 
-	// ----------------------
-	// Environment Variables
-	// ----------------------
-
-	err := godotenv.Load(".env." + environment.Get())
-	if err != nil {
-		log.Fatalf("Error loading .env.%v file", environment.Get())
-	}
-
 	// ---------
 	// Database
 	// ---------
@@ -52,7 +42,7 @@ func main() {
 	// Run
 	// ----
 
-	port := os.Getenv("PORT")
+	port := environment.GetEnvVar(environment.VAR_PORT)
 	log.Println("Server started on :" + port)
 	graceful.ListenAndServe(e.Server(":"+port), 5*time.Second) // Graceful shutdown
 }

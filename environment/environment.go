@@ -1,29 +1,40 @@
 package environment
-import "errors"
+
+import (
+	"errors"
+	"github.com/joho/godotenv"
+	"os"
+)
 
 const (
 	DEVELOPMENT string = "development"
 	TESTING     string = "testing"
 	STAGING     string = "staging"
 	PRODUCTION  string = "production"
+
+	VAR_PORT              string = "PORT"
+	VAR_PSQL_DATABASE_URL string = "POSTGRES_DATABASE_URL"
 )
 
 var (
 	activeEnvironment string
 )
 
-
 func Set(env string) error {
 	if isValid(env) {
 		activeEnvironment = env
+		err := godotenv.Load(".env." + activeEnvironment)
+		if err != nil {
+			return errors.New("Error loading the .env." + activeEnvironment + " file")
+		}
 		return nil
 	} else {
 		return errors.New("Invalid environment parameter")
 	}
 }
 
-func Get() string {
-	return activeEnvironment
+func GetEnvVar(key string) string {
+	return os.Getenv(key)
 }
 
 func isValid(env string) bool {
