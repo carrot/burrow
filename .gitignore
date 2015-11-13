@@ -16,7 +16,7 @@ vendor/
 _vendor/
 
 # Environment variables
-.env.*
+.env*
 
 # Compiled file
 go-base-api
