@@ -12,8 +12,8 @@ const (
 	STAGING     string = "staging"
 	PRODUCTION  string = "production"
 
-	VAR_PORT              string = "PORT"
-	VAR_PSQL_DATABASE_URL string = "POSTGRES_DATABASE_URL"
+	PORT              string = "PORT"
+	PSQL_DATABASE_URL string = "POSTGRES_DATABASE_URL"
 )
 
 var (
@@ -35,6 +35,10 @@ func SetWithRelativeDirectory(relativeDirectory string, env string) error {
 	} else {
 		return errors.New("Invalid environment parameter")
 	}
+}
+
+func GetActiveEnvironment() string {
+	return activeEnvironment
 }
 
 func GetEnvVar(key string) string {

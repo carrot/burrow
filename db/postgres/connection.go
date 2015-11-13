@@ -11,7 +11,7 @@ var database *sql.DB
 
 func Open() {
 	// Pulling environment vars
-	databaseUrl := environment.GetEnvVar(environment.VAR_PSQL_DATABASE_URL)
+	databaseUrl := environment.GetEnvVar(environment.PSQL_DATABASE_URL)
 
 	// Opening + storing the connection
 	db, err := sql.Open("postgres", databaseUrl)

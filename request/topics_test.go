@@ -41,7 +41,7 @@ func (suite *ApiTestSuite) SetupTest() {
 	e := BuildEcho()
 
 	// Running the server
-	port := environment.GetEnvVar(environment.VAR_PORT)
+	port := environment.GetEnvVar(environment.PORT)
 	suite.wreckerClient = wrecker.New("http://localhost:" + port)
 	log.Println("Server started on :" + port)
 	go graceful.ListenAndServe(e.Server(":"+port), 5*time.Second) // Graceful shutdown

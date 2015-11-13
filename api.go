@@ -16,8 +16,7 @@ func main() {
 	// ---------------------------
 
 	if len(os.Args) > 1 {
-		env := os.Args[1]
-		err := environment.Set(env)
+		err := environment.Set(os.Args[1])
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -42,7 +41,7 @@ func main() {
 	// Run
 	// ----
 
-	port := environment.GetEnvVar(environment.VAR_PORT)
+	port := environment.GetEnvVar(environment.PORT)
 	log.Println("Server started on :" + port)
 	graceful.ListenAndServe(e.Server(":"+port), 5*time.Second) // Graceful shutdown
 }
