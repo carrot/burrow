@@ -25,7 +25,7 @@ func Set(env string) error {
 }
 
 func SetWithRelativeDirectory(relativeDirectory string, env string) error {
-	if isValid(env) {
+	if IsValid(env) {
 		activeEnvironment = env
 		err := godotenv.Load(relativeDirectory + ".env." + activeEnvironment)
 		if err != nil {
@@ -45,7 +45,7 @@ func GetEnvVar(key string) string {
 	return os.Getenv(key)
 }
 
-func isValid(env string) bool {
+func IsValid(env string) bool {
 	return env == DEVELOPMENT ||
 		env == TESTING ||
 		env == STAGING ||

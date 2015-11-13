@@ -9,7 +9,9 @@ before_install:
 
 script:
   - $HOME/gopath/bin/gom install
-  - cd ./request; $HOME/gopath/bin/gom test
+  - base=$(pwd)
+  - cd "$base/request"; $HOME/gopath/bin/gom test
+  - cd "$base/environment"; $HOME/gopath/bin/gom test
 
 matrix:
   allow_failures:
