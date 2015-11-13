@@ -1,36 +1,92 @@
-package environment_test
+package environment
 
 import (
-	"github.com/carrot/go-base-api/environment"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
+	"io/ioutil"
 	"os"
 	"testing"
 )
 
-func TestEnvironmentSuite(t *testing.T) {
-	suite.Run(t, new(EnvironmentSuite))
+func TestEnvironmentSuites(t *testing.T) {
+	suite.Run(t, new(WithoutEnvironmentFileSuite))
+	suite.Run(t, new(WithEnvironmentFileSuite))
 }
 
-type EnvironmentSuite struct {
+// ==========================================
+// ========== WithEnvironmentSuite ==========
+// ==========================================
+
+const (
+	testFile string = "./.env." + TESTING;
+	testVariable = "TEST_ENV_VAR"
+	testValue = "value"
+)
+
+type WithEnvironmentFileSuite struct {
 	suite.Suite
 }
 
-func (suite *EnvironmentSuite) TestTestingEnvironment() {
-	testingIsValid := environment.IsValid(environment.TESTING)
-	assert.True(suite.T(), testingIsValid, "Testing must be a valid environment for test suites to work")
+func (suite *WithEnvironmentFileSuite) SetupTest() {
+	os.Remove(testFile)
+	contents := []byte(testVariable + "=" + testValue)
+	ioutil.WriteFile(testFile, contents, 0666)
 }
 
-func (suite *EnvironmentSuite) TestSet() {
-	// Checking if file exists
-	_, err := os.Stat("../.env." + environment.TESTING)
-	fileExists := err == nil
+func (suite *WithEnvironmentFileSuite) TearDownTest() {
+	os.Remove(testFile)
+}
 
-	// Testing Set (We are assuming environment.TESTING isValid)
-	err = environment.SetWithRelativeDirectory("../", environment.TESTING)
-	if err != nil {
-		assert.False(suite.T(), fileExists)
-	} else {
-		assert.True(suite.T(), fileExists)
-	}
+func (suite *WithEnvironmentFileSuite) TestIsValid() {
+	testingIsValid := isValid(TESTING)
+	assert.True(suite.T(), testingIsValid, "Testing must be a valid environment for test suites to work")
+
+	testingIsValid = isValid("SOME_OTHER_ENVIRONMENT")
+	assert.False(suite.T(), testingIsValid)
+}
+
+func (suite *WithEnvironmentFileSuite) TestSet() {
+	err := Set(TESTING)
+	assert.Nil(suite.T(), err)
+}
+
+func (suite *WithEnvironmentFileSuite) TestSetWithRelativeDirectory() {
+	err := SetWithRelativeDirectory("./", TESTING)
+	assert.Nil(suite.T(), err)
+}
+
+func (suite *WithEnvironmentFileSuite) TestGetActiveEnvironment() {
+	Set(TESTING)
+	assert.Equal(suite.T(), GetActiveEnvironment(), TESTING)
+}
+
+func (suite *WithEnvironmentFileSuite) TestGetEnvVar() {
+	Set(TESTING)
+	assert.Equal(suite.T(), GetEnvVar(testVariable), testValue)
+}
+
+// =============================================
+// ========== WithoutEnvironmentSuite ==========
+// =============================================
+
+type WithoutEnvironmentFileSuite struct {
+	suite.Suite
+}
+
+func (suite *WithoutEnvironmentFileSuite) SetupTest() {
+	os.Remove(testFile)
+}
+
+func (suite *WithoutEnvironmentFileSuite) TestSet() {
+	err := Set(TESTING)
+	assert.NotNil(suite.T(), err)
+}
+func (suite *WithoutEnvironmentFileSuite) TestSetWithRelativeDirectory() {
+	err := SetWithRelativeDirectory("./", TESTING)
+	assert.NotNil(suite.T(), err)
+}
+
+func (suite *WithoutEnvironmentFileSuite) TestGetEnvVar() {
+	Set(TESTING)
+	assert.Equal(suite.T(), GetEnvVar(testVariable), "")
 }
