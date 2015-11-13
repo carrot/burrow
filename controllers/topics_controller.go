@@ -41,8 +41,13 @@ func (tc *TopicsController) Index(c *echo.Context) error {
 	// Fetching models
 	res, err := models.AllTopics(limit, offset)
 	if err != nil {
-		resp.AddError(response.ErrorNoContent)
 		resp.SetResponse(http.StatusInternalServerError, nil)
+		return nil
+	}
+
+	// Checking if we have any topics
+	if len(res) < 1 {
+		resp.SetResponse(http.StatusNoContent, nil)
 		return nil
 	}
 
