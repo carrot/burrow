@@ -5,18 +5,18 @@ import (
 	"net/http"
 )
 
-type Error struct {
+type ErrorDetail struct {
 	Code int    `json:"code"`
 	Text string `json:"text"`
 }
 
 type Response struct {
-	Context    *echo.Context `json:"-"`
-	Success    bool          `json:"success"`
-	StatusCode int           `json:"status_code"`
-	StatusText string        `json:"status_text"`
-	Errors     []Error       `json:"errors"`
-	Content    interface{}   `json:"content"`
+	Context      *echo.Context `json:"-"`
+	Success      bool          `json:"success"`
+	StatusCode   int           `json:"status_code"`
+	StatusText   string        `json:"status_text"`
+	ErrorDetails []ErrorDetail `json:"error_details"`
+	Content      interface{}   `json:"content"`
 }
 
 // New instantiates a new Response struct and attaches the Echo context.
@@ -30,8 +30,8 @@ func New(c *echo.Context) *Response {
 }
 
 // AddError appends an error to the response via an Error Code.
-func (r *Response) AddError(code int) {
-	r.Errors = append(r.Errors, Error{code, ErrorText(code)})
+func (r *Response) AddErrorDetail(code int) {
+	r.ErrorDetails = append(r.ErrorDetails, ErrorDetail{code, ErrorDetailText(code)})
 }
 
 // SetResponse sets the response status code and content.

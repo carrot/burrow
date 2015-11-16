@@ -24,7 +24,7 @@ func AllTopics(limit int64, offset int64) ([]Topic, error) {
 	defer rows.Close()
 
 	// Converting rows into []Topic
-	var topics []Topic
+	var topics []Topic = []Topic{}
 	for rows.Next() {
 		t := new(Topic)
 		err = t.consumeNextRow(rows)

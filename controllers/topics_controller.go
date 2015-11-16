@@ -41,7 +41,6 @@ func (tc *TopicsController) Index(c *echo.Context) error {
 	// Fetching models
 	res, err := models.AllTopics(limit, offset)
 	if err != nil {
-		resp.AddError(response.ErrorNoContent)
 		resp.SetResponse(http.StatusInternalServerError, nil)
 		return nil
 	}
@@ -64,7 +63,7 @@ func (tc *TopicsController) Show(c *echo.Context) error {
 	// Getting id
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		resp.AddError(response.ErrorInvalidParameters)
+		resp.AddErrorDetail(response.ErrorInvalidIdParameter)
 		resp.SetResponse(http.StatusBadRequest, nil)
 		return nil
 	}
@@ -73,7 +72,6 @@ func (tc *TopicsController) Show(c *echo.Context) error {
 	topic := new(models.Topic)
 	err = topic.Load(id)
 	if err != nil {
-		resp.AddError(response.ErrorRecordNotFound)
 		resp.SetResponse(http.StatusNotFound, nil)
 		return nil
 	}
@@ -96,7 +94,7 @@ func (tc *TopicsController) Create(c *echo.Context) error {
 	// Getting params
 	name := c.Form("name")
 	if name == "" {
-		resp.AddError(response.ErrorInvalidParameters)
+		resp.AddErrorDetail(response.ErrorMissingNameParameter)
 		resp.SetResponse(http.StatusBadRequest, nil)
 		return nil
 	}
@@ -129,7 +127,6 @@ func (tc *TopicsController) Update(c *echo.Context) error {
 	// Getting params
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		resp.AddError(response.ErrorInvalidParameters)
 		resp.SetResponse(http.StatusBadRequest, nil)
 		return nil
 	}
@@ -138,7 +135,6 @@ func (tc *TopicsController) Update(c *echo.Context) error {
 	topic := new(models.Topic)
 	err = topic.Load(id)
 	if err != nil {
-		resp.AddError(response.ErrorRecordNotFound)
 		resp.SetResponse(http.StatusNotFound, nil)
 		return nil
 	}
@@ -172,7 +168,6 @@ func (tc *TopicsController) Delete(c *echo.Context) error {
 	// Getting Params
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		resp.AddError(response.ErrorInvalidParameters)
 		resp.SetResponse(http.StatusBadRequest, nil)
 		return nil
 	}

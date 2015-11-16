@@ -6,15 +6,13 @@ import (
 )
 
 func TestErrorTextFound(t *testing.T) {
-	expected := "Record Not Found"
-	actual := ErrorText(ErrorRecordNotFound)
-
+	expected := "Missing parameter `name`"
+	actual := ErrorDetailText(ErrorMissingNameParameter)
 	assert.Equal(t, expected, actual)
 }
 
 func TestErrorTextNotFound(t *testing.T) {
 	expected := ""
-	actual := ErrorText(999999)
-
+	actual := ErrorDetailText(999999)
 	assert.Equal(t, expected, actual)
 }
