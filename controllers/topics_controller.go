@@ -63,7 +63,7 @@ func (tc *TopicsController) Show(c *echo.Context) error {
 	// Getting id
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		resp.AddError(response.ErrorInvalidIdParameter)
+		resp.AddErrorDetail(response.ErrorInvalidIdParameter)
 		resp.SetResponse(http.StatusBadRequest, nil)
 		return nil
 	}
@@ -94,7 +94,7 @@ func (tc *TopicsController) Create(c *echo.Context) error {
 	// Getting params
 	name := c.Form("name")
 	if name == "" {
-		resp.AddError(response.ErrorMissingNameParameter)
+		resp.AddErrorDetail(response.ErrorMissingNameParameter)
 		resp.SetResponse(http.StatusBadRequest, nil)
 		return nil
 	}

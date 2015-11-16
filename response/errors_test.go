@@ -7,14 +7,14 @@ import (
 
 func TestErrorTextFound(t *testing.T) {
 	expected := "Record Not Found"
-	actual := ErrorText(ErrorRecordNotFound)
+	actual := ErrorDetailText(ErrorRecordNotFound)
 
 	assert.Equal(t, expected, actual)
 }
 
 func TestErrorTextNotFound(t *testing.T) {
 	expected := ""
-	actual := ErrorText(999999)
+	actual := ErrorDetailText(999999)
 
 	assert.Equal(t, expected, actual)
 }

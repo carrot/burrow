@@ -6,12 +6,12 @@ const (
 	ErrorInvalidIdParameter = 1
 )
 
-var errorText = map[int]string{
+var errorDetailText = map[int]string{
 	ErrorMissingNameParameter: "Missing parameter `name`",
 	ErrorInvalidIdParameter: "Invalid `id` parameter, `id` must be an integer",
 }
 
 // ErrorText returns a code's associated error text
-func ErrorText(code int) string {
-	return errorText[code]
+func ErrorDetailText(code int) string {
+	return errorDetailText[code]
 }
