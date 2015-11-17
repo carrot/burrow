@@ -183,3 +183,7 @@ Response{
   Content: nil,
 }
 ```
+
+## License
+
+[MIT](/LICENSE.md)
