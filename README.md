@@ -1,5 +1,7 @@
 # Go Base API
 
+[![Build Status](https://travis-ci.org/carrot/go-base-api.svg)](https://travis-ci.org/carrot/go-base-api)
+
 Carrots Base API scaffolding for Go.  We use [echo](https://github.com/labstack/echo) as our base framework.
 
 This is a Go implementation of our [RESTful API Spec](https://github.com/carrot/restful-api-spec).
