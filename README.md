@@ -1,8 +1,8 @@
-# Go Base API
+# Burrow
 
-[![Build Status](https://travis-ci.org/carrot/go-base-api.svg)](https://travis-ci.org/carrot/go-base-api)
+[![Godoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://godoc.org/github.com/carrot/burrow) [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](/LICENSE.md) [![Build Status](http://img.shields.io/travis/carrot/burrow.svg?style=flat-square)](https://travis-ci.org/carrot/burrow) [![Gitter](https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg?style=flat-square)](https://gitter.im/carrot/burrow)
 
-Carrots Base API scaffolding for Go.  We use [echo](https://github.com/labstack/echo) as our base framework.
+Burrow is a base API scaffolding for Go.  We use [echo](https://github.com/labstack/echo) as our base framework.
 
 This is a Go implementation of our [RESTful API Spec](https://github.com/carrot/restful-api-spec).
 
@@ -10,7 +10,7 @@ This is a Go implementation of our [RESTful API Spec](https://github.com/carrot/
 
 Clone this project into your [$GOPATH](https://golang.org/cmd/go/#hdr-GOPATH_environment_variable).
 
-The project by default is set up to point at `github.com/carrot/go-base-api`, but you can change that to whatever you'd like.  Just be sure to update all references in the code to match your new location.
+The project by default is set up to point at `github.com/carrot/burrow`, but you can change that to whatever you'd like.  Just be sure to update all references in the code to match your new location.
 
 #### Multiple Environment Support
 
@@ -21,15 +21,15 @@ This base supports multiple environments:
 - staging
 - production
 
-You will run this project with `./go-base-api {target-environment}`.  For example:
+You will run this project with `./burrow {target-environment}`.  For example:
 
 ```
-./go-base-api development
+./burrow development
 ```
 
 #### Environment Variables
 
-We use [godotenv](https://github.com/joho/godotenv) (a Go port of [bkeepers/dotenv](https://github.com/bkeepers/dotenv))to manage environment variables.
+Burrow uses [godotenv](https://github.com/joho/godotenv) (a Go port of [bkeepers/dotenv](https://github.com/bkeepers/dotenv))to manage environment variables.
 
 Copy `.env.sample` to `.env.{target-environment}`, and update the values in the `.env.{target-environment}` file.
 
@@ -42,7 +42,7 @@ export GO15VENDOREXPERIMENT=1
 
 #### Database
 
-We manage our database migrations with [originator](https://github.com/DigitalCitadel/originator).  To start off, [get that installed](https://github.com/DigitalCitadel/originator#installation) on your machine.
+Burrow manages its database migrations with [originator](https://github.com/DigitalCitadel/originator).  To start off, [get that installed](https://github.com/DigitalCitadel/originator#installation) on your machine.
 
 After you have originator installed, cd into `originator-files/config` and run `mkdir $(hostname)` to create a directory to hold your machine-specific config.
 
@@ -52,7 +52,7 @@ After you've updated the file, you can go and navigate to the root of the projec
 
 #### Dependencies + Building
 
-We manage our dependencies in this project with [gom](https://github.com/mattn/gom).  So to start off, you're going to have to install that:
+Burrow manages its dependencies with [gom](https://github.com/mattn/gom).  So to start off, you're going to have to install that:
 
 ```sh
 go get github.com/mattn/gom
@@ -86,27 +86,25 @@ If you're testing this on Travis CI, set up the environment variables as you tra
 
 Controllers are responsible for directly managing what happens during a request.  Every endpoint maps to a controller method.
 
-To keep things clean, we have one controller per model (with the name {Model}Controller) and all handlers are methods.
+To keep things clean, Burrow uses one controller per model (with the name {Model}Controller) and all handlers are methods.
 
-We follow [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) as the naming convention for all of our controller methods, with the exception of Read, which we use `Index` for bulk fetches, and `Show` for single fetches.
+> We try to follow [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) as the naming convention for all of our controller methods, with the exception of Read, which we use `Index` for bulk fetches, and `Show` for single fetches.
 
 ## Database
 
-We have configurations for both Redis and PostgreSQL.
+Burrow has configurations for both Redis and PostgreSQL.
 
 ### PostgreSQL
 
-PostgreSQL is very likely going to be your primary datastore if you are building out a larger API.
+There are details of how to get PostgreSQL up and running in the [Getting Started](#getting-started) section of this README.
 
-We have details of how to get PostgreSQL up and running in the [Getting Started](#getting-started) section of this README.
-
-We use [lib/pq](https://github.com/lib/pq) as our database driver, but you really don't have to know that as it's already been abstracted away in our `db/postgres` package.  You will simply be interfacing with Golangs [database/sql](https://golang.org/pkg/database/sql/).
+Burrow uses [lib/pq](https://github.com/lib/pq) as a database driver, but you really don't have to know that as it's already been abstracted away in the `db/postgres` package.  You will simply be interfacing with Golangs [database/sql](https://golang.org/pkg/database/sql/).
 
 ## Middleware
 
 This contains a set of commonly used middleware created for use with the Echo framework.
 
-- `Recover` - Recovers from `panic` calls. It's based off of the Echo-provided middleware of the same name but updated to fit our specific JSON interface model.
+- `Recover` - Recovers from `panic` calls. It's based off of the Echo-provided middleware of the same name but updated to fit Burrows specific JSON interface model.
 
 ## Models
 
@@ -116,7 +114,7 @@ We use one file per model, and store them in the `models/` directory and the nam
 
 We use [methods](https://gobyexample.com/methods) for fetching/manipulating single model structs, and [functions](https://gobyexample.com/functions) for bulk fetching models.
 
-We try to follow the naming conventions as described in this interface for all methods.  We don't actually enforce the interface in code, as most applications don't require every one of these methods for all models.
+We try to follow the naming conventions as described in this interface for all methods.  Burrow doesn't actually enforce the interface in code, as most applications don't require every one of these methods for all models.
 
 ```go
 type Model interface {
@@ -136,7 +134,6 @@ The `response` package contains both consistent error code/messages as well as h
 #### Success
 
 ```go
-
 func HomePage(c *echo.Context) error {
   resp := response.New(c)
   defer resp.Render()
@@ -150,7 +147,7 @@ func HomePage(c *echo.Context) error {
 
 #### Error
 
-Note: `AddError` may be called more than once to indicate multiple errors as could happen with form validations.
+> Note: `AddError` may be called more than once to indicate multiple errors as could happen with form validations.
 
 ```go
 func HomePage(c *echo.Context) error {
@@ -185,6 +182,14 @@ Response{
   Content: nil,
 }
 ```
+
+## Testing
+
+Tests are run on Travis against Go versions:
+
+- 1.5
+- 1.5.1
+- tip (failures allowed)
 
 ## License
 
