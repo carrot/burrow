@@ -10,7 +10,7 @@ This is a Go implementation of Carrot's [RESTful API Spec](https://github.com/ca
 
 Clone this project into your [$GOPATH](https://golang.org/cmd/go/#hdr-GOPATH_environment_variable).
 
-The project by default is set up to point at `github.com/carrot/burrow`, but you can change that to whatever you'd like.  Just be sure to update all references in the code to match your new location.
+By default, this project is set up to point at `github.com/carrot/burrow`, but you can change that to whatever you'd like.  Just be sure to update all references in the code to match your new location.
 
 #### Multiple Environment Support
 
@@ -42,17 +42,17 @@ export GO15VENDOREXPERIMENT=1
 
 #### Database
 
-Burrow manages its database migrations with [originator](https://github.com/DigitalCitadel/originator).  To start off, [get that installed](https://github.com/DigitalCitadel/originator#installation) on your machine.
+Burrow manages its database migrations with [Originator](https://github.com/DigitalCitadel/originator).  To start off, [get that installed](https://github.com/DigitalCitadel/originator#installation) on your machine.
 
-After you have originator installed, cd into `originator-files/config` and run `mkdir $(hostname)` to create a directory to hold your machine-specific config.
+After you have Originator installed, cd into `originator-files/config` and run `mkdir $(hostname)` to create a directory to hold your machine-specific config.
 
-The only config file that will have to be added to your machine-specific config is the `database_config.bash` file.  So go ahead and copy that from the default folder into your machine specific config folder.  Go and update your database config file to match your specific database setup.
+The only configuration file that must be added to your machine-specific config is the `database_config.bash` file.  Copy that from the default folder into your machine specific configuration folder.  Update your database config file to match your specific database setup.
 
-After you've updated the file, you can go and navigate to the root of the project and run `originator migrate` to run all of the current migrations.  Your database should now be set up.
+After you've updated the file, navigate to the root of the project and run `originator migrate` to execute all of the current migrations. Your database should now be set up.
 
 #### Dependencies + Building
 
-Burrow manages its dependencies with [gom](https://github.com/mattn/gom).  So to start off, you're going to have to install that:
+Burrow manages its dependencies with [gom](https://github.com/mattn/gom).  To start off, you'll need to install that:
 
 ```sh
 go get github.com/mattn/gom
@@ -64,21 +64,21 @@ After you've installed gom, you can run the following command to install the dep
 gom install
 ```
 
-After you have the dependencies installed, you can build the project:
+Once the dependencies are installed, you can build the project with the following command:
 
 ```sh
 gom build
 ```
 
-An executable file with the name of the root folder should now appear in the current directory.  You can run this and navigate to `http://localhost:5000/`.  If you receive a page that says `Not Found` you're all set up!
+An executable file with the name of the root folder should now appear in the current directory.  Run the executable and navigate to `http://localhost:5000/`.  If you receive a page that says `Not Found` you're all set up!
 
 #### Testing
 
-To run tests, run `gom test`.
+To run all tests, run `gom test`.
 
 Tests should be written to automatically load `.env.testing` (but not fail if it's not there) and as a user of the tests you should have your `.env.testing` file filled out.
 
-If you're testing this on Travis CI, set up the environment variables as you traditionally would with Travis and run normally.
+If you're testing the project on Travis CI, set up the environment variables as you traditionally would with Travis and run normally.
 
 ## Main
 
@@ -98,7 +98,7 @@ Burrow has configurations for both Redis and PostgreSQL.
 
 There are details of how to get PostgreSQL up and running in the [Getting Started](#getting-started) section of this README.
 
-Burrow uses [lib/pq](https://github.com/lib/pq) as a database driver, but you really don't have to know that as it's already been abstracted away in the `db/postgres` package.  You will simply be interfacing with Golangs [database/sql](https://golang.org/pkg/database/sql/).
+Burrow uses [lib/pq](https://github.com/lib/pq) as a database driver, but you really don't have to know that as it's already been abstracted away in the `db/postgres` package.  You will simply be interfacing with Go's [database/sql](https://golang.org/pkg/database/sql/).
 
 ## Middleware
 
@@ -185,7 +185,7 @@ Response{
 
 ## Testing
 
-Tests are run on Travis against Go versions:
+Tests are run on Travis CI against Go versions:
 
 - 1.5
 - 1.5.1
