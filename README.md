@@ -80,8 +80,6 @@ Tests should be written to automatically load `.env.testing` (but not fail if it
 
 If you're testing the project on Travis CI, set up the environment variables as you traditionally would with Travis and run normally.
 
-## Main
-
 ## Controllers
 
 Controllers are responsible for directly managing what happens during a request.  Every endpoint maps to a controller method.
