@@ -4,7 +4,7 @@
 
 Burrow is a base API scaffolding for Go.  We use [echo](https://github.com/labstack/echo) as our base framework.
 
-This is a Go implementation of our [RESTful API Spec](https://github.com/carrot/restful-api-spec).
+This is a Go implementation of Carrot's [RESTful API Spec](https://github.com/carrot/restful-api-spec).
 
 ## Getting Started
 
