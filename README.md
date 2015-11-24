@@ -1,6 +1,6 @@
 # Go Base API
 
-[![Build Status](https://travis-ci.org/carrot/go-base-api.svg)](https://travis-ci.org/carrot/go-base-api)
+[![Build Status](https://travis-ci.org/carrot/burrow.svg)](https://travis-ci.org/carrot/burrow)
 
 Carrots Base API scaffolding for Go.  We use [echo](https://github.com/labstack/echo) as our base framework.
 
