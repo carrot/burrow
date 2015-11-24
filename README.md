@@ -1,6 +1,6 @@
 # Burrow
 
-[![Godoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://godoc.org/github.com/carrot/burrow) [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](/LICENSE.md) [![Build Status](http://img.shields.io/travis/carrot/burrow.svg?style=flat-square)](https://travis-ci.org/carrot/burrow) [![Gitter](https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg?style=flat-square)](https://gitter.im/carrot/burrow)
+[![Godoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://godoc.org/github.com/carrot/burrow)  [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](/LICENSE.md) [![Version](https://img.shields.io/github/release/carrot/burrow.svg?style=flat-square)](https://github.com/carrot/burrow/releases) [![Build Status](http://img.shields.io/travis/carrot/burrow.svg?style=flat-square)](https://travis-ci.org/carrot/burrow) [![Gitter](https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg?style=flat-square)](https://gitter.im/carrot/burrow)
 
 Burrow is a base API scaffolding for Go.  We use [echo](https://github.com/labstack/echo) as our base framework.
 
