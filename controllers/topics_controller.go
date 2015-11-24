@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"github.com/carrot/go-base-api/models"
-	"github.com/carrot/go-base-api/response"
+	"github.com/carrot/burrow/models"
+	"github.com/carrot/burrow/response"
 	"github.com/labstack/echo"
 	"net/http"
 	"strconv"

@@ -1,9 +1,9 @@
 package main
 
 import (
-	db "github.com/carrot/go-base-api/db/postgres"
-	"github.com/carrot/go-base-api/environment"
-	"github.com/carrot/go-base-api/request"
+	db "github.com/carrot/burrow/db/postgres"
+	"github.com/carrot/burrow/environment"
+	"github.com/carrot/burrow/request"
 	"github.com/tylerb/graceful"
 	"log"
 	"os"

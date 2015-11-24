@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	_ "github.com/lib/pq"
 	"log"
-	"github.com/carrot/go-base-api/environment"
+	"github.com/carrot/burrow/environment"
 )
 
 var database *sql.DB
