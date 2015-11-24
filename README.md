@@ -1,5 +1,7 @@
 # Go Base API
 
+[![Join the chat at https://gitter.im/carrot/burrow](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/carrot/burrow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/carrot/go-base-api.svg)](https://travis-ci.org/carrot/go-base-api)
 
 Carrots Base API scaffolding for Go.  We use [echo](https://github.com/labstack/echo) as our base framework.
