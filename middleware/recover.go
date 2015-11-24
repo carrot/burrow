@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"fmt"
-	"github.com/carrot/go-base-api/response"
+	"github.com/carrot/burrow/response"
 	"github.com/labstack/echo"
 	"net/http"
 	"runtime"

@@ -19,7 +19,7 @@ _vendor/
 .env*
 
 # Compiled file
-go-base-api
+burrow
 
 # Architecture specific extensions/prefixes
 *.[568vq]
@@ -38,5 +38,5 @@ _testmain.go
 *.prof
 
 # IntelliJ
-go-base-api.iml
+*.iml
 .idea/*

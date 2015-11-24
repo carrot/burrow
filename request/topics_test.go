@@ -2,9 +2,9 @@ package request
 
 import (
 	"github.com/BrandonRomano/wrecker"
-	db "github.com/carrot/go-base-api/db/postgres"
-	"github.com/carrot/go-base-api/models"
-	"github.com/carrot/go-base-api/response"
+	db "github.com/carrot/burrow/db/postgres"
+	"github.com/carrot/burrow/models"
+	"github.com/carrot/burrow/response"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"github.com/tylerb/graceful"
@@ -14,7 +14,7 @@ import (
 	"strconv"
 	"testing"
 	"time"
-	"github.com/carrot/go-base-api/environment"
+	"github.com/carrot/burrow/environment"
 )
 
 func TestApiTestSuite(t *testing.T) {

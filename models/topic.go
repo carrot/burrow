@@ -3,7 +3,7 @@ package models
 import (
 	"database/sql"
 	"errors"
-	db "github.com/carrot/go-base-api/db/postgres"
+	db "github.com/carrot/burrow/db/postgres"
 	"time"
 )
 

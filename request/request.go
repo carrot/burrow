@@ -1,8 +1,8 @@
 package request
 
 import (
-	"github.com/carrot/go-base-api/controllers"
-	"github.com/carrot/go-base-api/middleware"
+	"github.com/carrot/burrow/controllers"
+	"github.com/carrot/burrow/middleware"
 	"github.com/labstack/echo"
 	echo_middleware "github.com/labstack/echo/middleware"
 )
