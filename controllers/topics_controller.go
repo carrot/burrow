@@ -102,7 +102,7 @@ func (tc *TopicsController) Create(c *echo.Context) error {
 	// Creating the topic
 	topic := new(models.Topic)
 	topic.Name = name
-	err := topic.Save()
+	err := topic.Insert()
 	if err != nil {
 		resp.SetResponse(http.StatusConflict, nil)
 		return nil

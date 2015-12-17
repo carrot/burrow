@@ -117,7 +117,7 @@ We try to follow the naming conventions as described in this interface for all m
 ```go
 type Model interface {
     Load(id int64) error    // Loads the contents of model entry with ID into current struct
-    Save() error            // Saves the state of the current struct into the DB
+    Insert() error          // Inserts the state of the current struct into the DB
     Update() error          // Updates the state of the current struct to the DB
     Delete() error          // Removes the current struct from the DB
 }
