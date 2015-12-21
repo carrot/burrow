@@ -51,7 +51,7 @@ func (t *Topic) Load(id int64) error {
 	return t.consumeRow(row)
 }
 
-func (t *Topic) Save() error {
+func (t *Topic) Insert() error {
 	// Putting into database
 	database := db.Get()
 	row := database.QueryRow("INSERT INTO topics VALUES(default, $1, default, default) RETURNING *",
