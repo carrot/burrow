@@ -3,6 +3,7 @@ package request
 import (
 	"github.com/carrot/burrow/controllers"
 	"github.com/carrot/burrow/middleware"
+	"github.com/carrot/burrow/response"
 	"github.com/labstack/echo"
 	echo_middleware "github.com/labstack/echo/middleware"
 )
@@ -20,6 +21,19 @@ func BuildEcho() *echo.Echo {
 
 	e.Use(echo_middleware.Logger())
 	e.Use(middleware.Recover())
+
+	// -------------------
+	// HTTP Error Handler
+	// -------------------
+
+	e.SetHTTPErrorHandler(func(err error, context *echo.Context) {
+		httpError, ok := err.(*echo.HTTPError)
+		if ok {
+			response := response.New(context)
+			response.SetResponse(httpError.Code(), nil)
+			response.Render()
+		}
+	})
 
 	// ------------
 	// Controllers
