@@ -88,6 +88,14 @@ To keep things clean, Burrow uses one controller per model (with the name {Model
 
 > We try to follow [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) as the naming convention for all of our controller methods, with the exception of Read, which we use `Index` for bulk fetches, and `Show` for single fetches.
 
+## Routes
+
+After you've set up a controller with some handlers, you now likely want to hook up the controller so we can actually call the handler from an HTTP request.
+
+The routes are managed in the [request.go](/request/request.go) file.  In the `BuildEcho` function, you'll find a few sections.  One is for `Controllers`, which you should there create an instance of your controller.  There's another section for `Endpoints`, which is where you will register each controller method.
+
+After both of these are done, you should now be able to send an HTTP request to run your controller method.
+
 ## Database
 
 Burrow has configurations for both Redis and PostgreSQL.
