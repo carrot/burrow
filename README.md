@@ -86,7 +86,29 @@ Controllers are responsible for directly managing what happens during a request.
 
 To keep things clean, Burrow uses one controller per model (with the name {Model}Controller) and all handlers are methods.
 
-> We try to follow [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) as the naming convention for all of our controller methods, with the exception of Read, which we use `Index` for bulk fetches, and `Show` for single fetches.
+We try to follow [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) as the naming convention for all of our controller methods, with the exception of Read, which we use `Index` for bulk fetches, and `Show` for single fetches.
+
+So, if we had a model named `people`, our methods would map a little something like this:
+
+```
+PeopleController.Create  ->  [POST]   /people
+PeopleController.Show    ->  [GET]    /people/{id}
+PeopleController.Index   ->  [GET]    /people
+PeopleController.Update  ->  [PUT]    /people/{id}
+PeopleController.Delete  ->  [DELETE] /people/{id}
+```
+
+#### Nested Controllers
+
+In the event that you have nested endpoints, that look like this:
+
+```
+[GET] /people/{id}/pets
+```
+
+You're going to want to create a new controller to handle these relations.
+
+Following our example above, we would create a `PeoplePetsController`.
 
 ## Routes
 
