@@ -18,9 +18,9 @@ func TestEnvironmentSuites(t *testing.T) {
 // ==========================================
 
 const (
-	testFile string = "./.env." + TESTING;
-	testVariable = "TEST_ENV_VAR"
-	testValue = "value"
+	testFile     string = "./.env." + TESTING
+	testVariable        = "TEST_ENV_VAR"
+	testValue           = "value"
 )
 
 type WithEnvironmentFileSuite struct {
