@@ -28,8 +28,11 @@ func Set(env string) error {
 	return SetWithRelativeDirectory("./", env)
 }
 
-func SetWithRelativeDirectory(relativeDirectory string, activeEnvironment string) error {
-	if isValid(activeEnvironment) {
+func SetWithRelativeDirectory(relativeDirectory string, env string) error {
+	if isValid(env) {
+		// Store active environment
+		activeEnvironment = env
+
 		// Require an env file
 		err := godotenv.Load(relativeDirectory + ".env." + activeEnvironment)
 		if err != nil && activeEnvironment != PRODUCTION {
