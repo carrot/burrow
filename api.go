@@ -3,11 +3,10 @@ package main
 import (
 	db "github.com/carrot/burrow/db/postgres"
 	"github.com/carrot/burrow/environment"
-	"github.com/carrot/burrow/middleware"
 	"github.com/carrot/burrow/response"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
-	echo_middleware "github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/middleware"
 	"github.com/tylerb/graceful"
 	"log"
 	"os"
@@ -45,7 +44,7 @@ func main() {
 	// Middleware
 	// -----------
 
-	e.Use(echo_middleware.Logger())
+	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
 	// -------------------
