@@ -1,6 +1,9 @@
 package response
 
-import "github.com/carrot/burrow/util"
+import (
+	"github.com/carrot/burrow/constants"
+	"github.com/carrot/burrow/util"
+)
 
 // Enums
 //
@@ -29,15 +32,18 @@ var (
 // After adding a value to this list, you must always add it to the
 // errorDetailText map.
 const (
-	ErrorMissingNameParameter = 1
-	ErrorInvalidIdParameter   = 2
-	ErrorInvalidEnumParameter = 3
+	ErrorMissingNameParameter   = 1
+	ErrorInvalidIdParameter     = 2
+	ErrorInvalidEnumParameter   = 3
+	ErrorInvalidLimitParameter  = 4
+	ErrorInvalidOffsetParameter = 5
 )
 
 var errorDetailText = map[int]string{
-	ErrorMissingNameParameter: missingParam("name"),
-	ErrorInvalidIdParameter:   invalidIntParam("id"),
-	ErrorInvalidEnumParameter: invalidEnumParam("access_level", exampleEnum),
+	ErrorMissingNameParameter:   missingParam("name"),
+	ErrorInvalidIdParameter:     invalidIntParam("id"),
+	ErrorInvalidEnumParameter:   invalidEnumParam("access_level", exampleEnum),
+	ErrorInvalidOffsetParameter: invalidNonNegativeIntParam(constants.OFFSET),
 }
 
 // ErrorText returns a code's associated error text
@@ -59,8 +65,17 @@ func invalidParam(name string, mustBe string) string {
 	return "Invalid `" + name + "` parameter, `" + name + "` must be " + mustBe
 }
 
+func invalidHeader(name string, mustBe string) string {
+	return "Invalid `" + name + "` header, `" + name + "` must be " + mustBe
+}
+
 func collisionParam(name string) string {
 	return "Duplicate key value violates unique constraint `" + name + "`"
+}
+
+func deleteRestricted(dependentModelNameSingular string) string {
+	return "Resource cannot be deleted as it is still referenced by a `" +
+		dependentModelNameSingular + "`"
 }
 
 func invalidDateParam(name string) string {
@@ -69,6 +84,18 @@ func invalidDateParam(name string) string {
 
 func invalidIntParam(name string) string {
 	return invalidParam(name, "an integer")
+}
+
+func invalidNonNegativeIntParam(name string) string {
+	return invalidParam(name, "a non-negative integer")
+}
+
+func invalidUuidParam(name string) string {
+	return invalidParam(name, "a valid RFC 4122 UUID")
+}
+
+func invalidFloatParam(name string) string {
+	return invalidParam(name, "a float")
 }
 
 func invalidEnumParam(name string, valids []string) string {
