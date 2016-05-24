@@ -3,7 +3,11 @@ package main
 import (
 	db "github.com/carrot/burrow/db/postgres"
 	"github.com/carrot/burrow/environment"
-	"github.com/carrot/burrow/request"
+	"github.com/carrot/burrow/middleware"
+	"github.com/carrot/burrow/response"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/engine/standard"
+	echo_middleware "github.com/labstack/echo/middleware"
 	"github.com/tylerb/graceful"
 	"log"
 	"os"
@@ -35,13 +39,41 @@ func main() {
 	// Echo
 	// -----
 
-	e := request.BuildEcho()
+	e := echo.New()
+
+	// -----------
+	// Middleware
+	// -----------
+
+	e.Use(echo_middleware.Logger())
+	e.Use(middleware.Recover())
+
+	// -------------------
+	// HTTP Error Handler
+	// -------------------
+
+	e.SetHTTPErrorHandler(func(err error, context echo.Context) {
+		httpError, ok := err.(*echo.HTTPError)
+		if ok {
+			response := response.New(context)
+			response.SetResponse(httpError.Code, nil)
+			response.Render()
+		}
+	})
+
+	// -------
+	// Routes
+	// -------
+
+	prepareRoutes(e)
 
 	// ----
 	// Run
 	// ----
 
 	port := environment.GetEnvVar(environment.PORT)
-	log.Println("Server started on :" + port)
-	graceful.ListenAndServe(e.Server(":"+port), 5*time.Second) // Graceful shutdown
+	std := standard.New(":" + port)
+	std.SetHandler(e)
+	log.Println("Server starting on :" + port)
+	graceful.ListenAndServe(std.Server, 5*time.Second) // Graceful shutdown
 }
