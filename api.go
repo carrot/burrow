@@ -1,12 +1,14 @@
 package main
 
 import (
+	"fmt"
 	db "github.com/carrot/burrow/db/postgres"
 	"github.com/carrot/burrow/environment"
 	"github.com/carrot/burrow/response"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
 	"github.com/labstack/echo/middleware"
+	"github.com/labstack/gommon/color"
 	"github.com/tylerb/graceful"
 	"log"
 	"os"
@@ -52,6 +54,7 @@ func main() {
 	// -------------------
 
 	e.SetHTTPErrorHandler(func(err error, context echo.Context) {
+		fmt.Println(color.Red(err))
 		httpError, ok := err.(*echo.HTTPError)
 		if ok {
 			response := response.New(context)
