@@ -8,11 +8,11 @@ import (
 	"strconv"
 )
 
-func GetLimit(c echo.Context) (int, *HelperError) {
-	limit := 10
+func GetLimit(c echo.Context) (int64, *HelperError) {
+	limit := int64(10)
 	limitParam := c.QueryParam(constants.LIMIT)
 	if limitParam != "" {
-		limitParamInt, err := strconv.Atoi(limitParam)
+		limitParamInt, err := strconv.ParseInt(limitParam, 10, 64)
 		if err != nil {
 			helperError := NewHelperError(http.StatusBadRequest, err)
 			helperError.AddErrorDetailCode(response.ErrorInvalidLimitParameter)
@@ -29,11 +29,11 @@ func GetLimit(c echo.Context) (int, *HelperError) {
 	return limit, nil
 }
 
-func GetOffset(c echo.Context) (int, *HelperError) {
-	offset := 0
+func GetOffset(c echo.Context) (int64, *HelperError) {
+	offset := int64(0)
 	offsetParam := c.QueryParam(constants.OFFSET)
 	if offsetParam != "" {
-		offsetParamInt, err := strconv.Atoi(offsetParam)
+		offsetParamInt, err := strconv.ParseInt(offsetParam, 10, 64)
 		if err != nil {
 			helperError := NewHelperError(http.StatusBadRequest, err)
 			helperError.AddErrorDetailCode(response.ErrorInvalidOffsetParameter)

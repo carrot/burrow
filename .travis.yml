@@ -12,9 +12,6 @@ script:
   - go clean -i
   - $HOME/gopath/bin/gom install
   - base=$(pwd)
-  - cd "$base/request"; $HOME/gopath/bin/gom test
-  - cd "$base/response"; $HOME/gopath/bin/gom test
-  - cd "$base/environment"; $HOME/gopath/bin/gom test
 
 matrix:
   allow_failures:
