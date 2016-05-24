@@ -11,7 +11,7 @@ type ErrorDetail struct {
 }
 
 type Response struct {
-	Context      *echo.Context `json:"-"`
+	Context      echo.Context  `json:"-"`
 	Success      bool          `json:"success"`
 	StatusCode   int           `json:"status_code"`
 	StatusText   string        `json:"status_text"`
@@ -21,7 +21,7 @@ type Response struct {
 
 // New instantiates a new Response struct and attaches the Echo context.
 // It returns the Response struct.
-func New(c *echo.Context) *Response {
+func New(c echo.Context) *Response {
 	r := new(Response)
 	r.Context = c
 	r.Success = false
