@@ -175,7 +175,7 @@ func HomePage(c *echo.Context) error {
 
 #### Error
 
-> Note: `AddError` may be called more than once to indicate multiple errors as could happen with form validations.
+> Note: `AddErrorDetail` may be called more than once to indicate multiple errors as could happen with form validations.
 
 ```go
 func HomePage(c *echo.Context) error {
@@ -185,7 +185,7 @@ func HomePage(c *echo.Context) error {
   content, err := ComplexLogic()
 
   if err != nil {
-    resp.AddError(response.ErrorInternalServerError)
+    resp.AddErrorDetail(response.ErrorInternalServerError)
     resp.SetResponse(http.StatusInternalServerError, nil)
     return nil
   }
