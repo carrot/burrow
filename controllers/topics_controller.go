@@ -18,7 +18,7 @@ type TopicsController struct{}
  * @apiParam {Number} [limit=10] The maximum number of items to return
  * @apiParam {Number} [offset=0] The offset relative to the number of items (not page number)
  */
-func (tc *TopicsController) Index(c *echo.Context) error {
+func (tc *TopicsController) Index(c echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
 
@@ -27,13 +27,13 @@ func (tc *TopicsController) Index(c *echo.Context) error {
 	var offset int64 = 0
 
 	// Getting limit
-	limitInt, err := strconv.ParseInt(c.Query("limit"), 10, 64)
+	limitInt, err := strconv.ParseInt(c.QueryParam("limit"), 10, 64)
 	if err == nil {
 		limit = limitInt
 	}
 
 	// Getting offset
-	offsetInt, err := strconv.ParseInt(c.Query("offset"), 10, 64)
+	offsetInt, err := strconv.ParseInt(c.QueryParam("offset"), 10, 64)
 	if err == nil {
 		offset = offsetInt
 	}
@@ -56,7 +56,7 @@ func (tc *TopicsController) Index(c *echo.Context) error {
  *
  * @apiParam {Number} id The id of the topic
  */
-func (tc *TopicsController) Show(c *echo.Context) error {
+func (tc *TopicsController) Show(c echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
 
@@ -87,12 +87,12 @@ func (tc *TopicsController) Show(c *echo.Context) error {
  *
  * @apiParam {String} name The name of the topic
  */
-func (tc *TopicsController) Create(c *echo.Context) error {
+func (tc *TopicsController) Create(c echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
 
 	// Getting params
-	name := c.Form("name")
+	name := c.FormValue("name")
 	if name == "" {
 		resp.AddErrorDetail(response.ErrorMissingNameParameter)
 		resp.SetResponse(http.StatusBadRequest, nil)
@@ -120,7 +120,7 @@ func (tc *TopicsController) Create(c *echo.Context) error {
  * @apiParam {Number} id The id of the topic to update
  * @apiParam {String} [name] The new name of the topic
  */
-func (tc *TopicsController) Update(c *echo.Context) error {
+func (tc *TopicsController) Update(c echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
 
@@ -139,7 +139,7 @@ func (tc *TopicsController) Update(c *echo.Context) error {
 		return nil
 	}
 
-	name := c.Form("name")
+	name := c.FormValue("name")
 	if name != "" {
 		topic.Name = name
 	}
@@ -161,12 +161,12 @@ func (tc *TopicsController) Update(c *echo.Context) error {
  *
  * @apiParam {Number} id The id of the topic to delete
  */
-func (tc *TopicsController) Delete(c *echo.Context) error {
+func (tc *TopicsController) Delete(c echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
 
 	// Getting Params
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	id, err := strconv.ParseInt(c.QueryParam("id"), 10, 64)
 	if err != nil {
 		resp.SetResponse(http.StatusBadRequest, nil)
 		return nil
