@@ -34,6 +34,13 @@ func (r *Response) AddErrorDetail(code int) {
 	r.ErrorDetails = append(r.ErrorDetails, ErrorDetail{code, ErrorDetailText(code)})
 }
 
+// AddErrorDetails appends multiple errors to the response via Error Codes.
+func (r *Response) AddErrorDetails(codes []int) {
+	for _, code := range codes {
+		r.ErrorDetails = append(r.ErrorDetails, ErrorDetail{code, ErrorDetailText(code)})
+	}
+}
+
 // SetResponse sets the response status code and content.
 func (r *Response) SetResponse(code int, content interface{}) {
 	r.StatusCode = code

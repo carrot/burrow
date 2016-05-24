@@ -1,13 +1,14 @@
 package main
 
 import (
+	"fmt"
 	db "github.com/carrot/burrow/db/postgres"
 	"github.com/carrot/burrow/environment"
-	"github.com/carrot/burrow/middleware"
 	"github.com/carrot/burrow/response"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
-	echo_middleware "github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/middleware"
+	"github.com/labstack/gommon/color"
 	"github.com/tylerb/graceful"
 	"log"
 	"os"
@@ -45,7 +46,7 @@ func main() {
 	// Middleware
 	// -----------
 
-	e.Use(echo_middleware.Logger())
+	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
 	// -------------------
@@ -53,6 +54,7 @@ func main() {
 	// -------------------
 
 	e.SetHTTPErrorHandler(func(err error, context echo.Context) {
+		fmt.Println(color.Red(err))
 		httpError, ok := err.(*echo.HTTPError)
 		if ok {
 			response := response.New(context)

@@ -6,12 +6,16 @@ import (
 	"os"
 )
 
+// Environment Types
 const (
 	DEVELOPMENT string = "development"
 	TESTING     string = "testing"
 	STAGING     string = "staging"
 	PRODUCTION  string = "production"
+)
 
+// Environment Variables
+const (
 	PORT              string = "PORT"
 	PSQL_DATABASE_URL string = "POSTGRES_DATABASE_URL"
 )
@@ -26,9 +30,12 @@ func Set(env string) error {
 
 func SetWithRelativeDirectory(relativeDirectory string, env string) error {
 	if isValid(env) {
+		// Store active environment
 		activeEnvironment = env
+
+		// Require an env file
 		err := godotenv.Load(relativeDirectory + ".env." + activeEnvironment)
-		if err != nil {
+		if err != nil && activeEnvironment != PRODUCTION {
 			return errors.New("Error loading the .env." + activeEnvironment + " file")
 		}
 		return nil

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/carrot/burrow/controllers/helper"
 	"github.com/carrot/burrow/models"
 	"github.com/carrot/burrow/response"
 	"github.com/labstack/echo"
@@ -22,20 +23,16 @@ func (tc *TopicsController) Index(c echo.Context) error {
 	resp := response.New(c)
 	defer resp.Render()
 
-	// Defaults
-	var limit int64 = 10
-	var offset int64 = 0
-
 	// Getting limit
-	limitInt, err := strconv.ParseInt(c.QueryParam("limit"), 10, 64)
-	if err == nil {
-		limit = limitInt
+	limit, helperError := helper.GetLimit(c)
+	if helperError != nil {
+		return helper.PrepareResponse(resp, helperError)
 	}
 
 	// Getting offset
-	offsetInt, err := strconv.ParseInt(c.QueryParam("offset"), 10, 64)
-	if err == nil {
-		offset = offsetInt
+	offset, helperError := helper.GetOffset(c)
+	if helperError != nil {
+		return helper.PrepareResponse(resp, helperError)
 	}
 
 	// Fetching models
