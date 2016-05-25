@@ -26,29 +26,15 @@ func (t *Topic) Prep() *Topic {
 		Config: serf.Configuration{
 			TableName: "topics",
 			Fields: []serf.Field{
-				serf.Field{
-					Pointer:          &t.Id,
-					Name:             "id",
-					UniqueIdentifier: true,
+				serf.Field{Pointer: &t.Id, Name: "id", UniqueIdentifier: true,
 					IsSet: func(pointer interface{}) bool {
 						pointerInt := *pointer.(*int64)
 						return pointerInt != 0
 					},
 				},
-				serf.Field{
-					Pointer:    &t.Name,
-					Name:       "name",
-					Insertable: true,
-					Updatable:  true,
-				},
-				serf.Field{
-					Pointer: &t.CreatedAt,
-					Name:    "created_at",
-				},
-				serf.Field{
-					Pointer: &t.UpdatedAt,
-					Name:    "updated_at",
-				},
+				serf.Field{Pointer: &t.Name, Name: "name", Insertable: true, Updatable: true},
+				serf.Field{Pointer: &t.CreatedAt, Name: "created_at"},
+				serf.Field{Pointer: &t.UpdatedAt, Name: "updated_at"},
 			},
 		},
 	}
