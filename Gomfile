@@ -6,3 +6,4 @@ gom 'github.com/garyburd/redigo/redis', :commit => '6ece6e0a09f28cc399b21550cbf3
 gom 'github.com/lib/pq', :commit => '83c4f410d0aed80a0f44bac6a576a7f2435791f3'
 gom 'github.com/joho/godotenv', :tag => 'v1'
 gom 'github.com/BrandonRomano/wrecker', :tag => 'v0.0.1'
+gom 'github.com/BrandonRomano/serf', :tag => 'v1.0.0'

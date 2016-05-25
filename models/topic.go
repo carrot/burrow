@@ -2,16 +2,43 @@ package models
 
 import (
 	"database/sql"
-	"errors"
+	"github.com/BrandonRomano/serf"
 	db "github.com/carrot/burrow/db/postgres"
 	"time"
 )
 
 type Topic struct {
-	Id        int64     `json:"id"`
-	Name      string    `json:"name"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	serf.Worker `json:"-"`
+	Id          int64     `json:"id"`
+	Name        string    `json:"name"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+func NewTopic() *Topic {
+	topic := new(Topic)
+	return topic.Prep()
+}
+
+func (t *Topic) Prep() *Topic {
+	t.Worker = &serf.PqWorker{
+		Database: db.Get(),
+		Config: serf.Configuration{
+			TableName: "topics",
+			Fields: []serf.Field{
+				serf.Field{Pointer: &t.Id, Name: "id", UniqueIdentifier: true,
+					IsSet: func(pointer interface{}) bool {
+						pointerInt := *pointer.(*int64)
+						return pointerInt != 0
+					},
+				},
+				serf.Field{Pointer: &t.Name, Name: "name", Insertable: true, Updatable: true},
+				serf.Field{Pointer: &t.CreatedAt, Name: "created_at"},
+				serf.Field{Pointer: &t.UpdatedAt, Name: "updated_at"},
+			},
+		},
+	}
+	return t
 }
 
 func AllTopics(limit int64, offset int64) ([]Topic, error) {
@@ -43,70 +70,6 @@ func AllTopics(limit int64, offset int64) ([]Topic, error) {
 	}
 
 	return topics, nil
-}
-
-func (t *Topic) Load(id int64) error {
-	database := db.Get()
-	row := database.QueryRow("SELECT * FROM topics WHERE id = $1", id)
-	return t.consumeRow(row)
-}
-
-func (t *Topic) Insert() error {
-	// Putting into database
-	database := db.Get()
-	row := database.QueryRow("INSERT INTO topics VALUES(default, $1, default, default) RETURNING *",
-		&t.Name,
-	)
-
-	// Updating values to match database
-	err := t.consumeRow(row)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (t *Topic) Update() error {
-	// Updating in database
-	database := db.Get()
-	row := database.QueryRow("UPDATE topics SET name=$1 WHERE id=$2 RETURNING *",
-		&t.Name,
-		&t.Id,
-	)
-
-	// Updating values to match database
-	err := t.consumeRow(row)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (t *Topic) Delete() error {
-	// Deleting from database
-	database := db.Get()
-	res, err := database.Exec("DELETE FROM topics WHERE id=$1", t.Id)
-	if err != nil {
-		return err
-	}
-
-	numRows, _ := res.RowsAffected()
-	if numRows != 1 {
-		return errors.New("Nothing was deleted")
-	}
-
-	return nil
-}
-
-func (t *Topic) consumeRow(row *sql.Row) error {
-	return row.Scan(
-		&t.Id,
-		&t.Name,
-		&t.CreatedAt,
-		&t.UpdatedAt,
-	)
 }
 
 func (t *Topic) consumeNextRow(rows *sql.Rows) error {

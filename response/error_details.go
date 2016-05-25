@@ -43,6 +43,7 @@ var errorDetailText = map[int]string{
 	ErrorMissingNameParameter:   missingParam("name"),
 	ErrorInvalidIdParameter:     invalidIntParam("id"),
 	ErrorInvalidEnumParameter:   invalidEnumParam("access_level", exampleEnum),
+	ErrorInvalidLimitParameter:  invalidNonNegativeIntParam(constants.LIMIT),
 	ErrorInvalidOffsetParameter: invalidNonNegativeIntParam(constants.OFFSET),
 }
 
